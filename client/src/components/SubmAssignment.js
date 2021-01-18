@@ -14,34 +14,34 @@ import {
 } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getItems, deleteItem } from '../actions/itemAction';
+import { getAssignments, deleteAssignment } from '../actions/assignmentAction';
 import PropTypes from 'prop-types';
 
 
 
 //Assignment list 
-class AssignmentList extends Component {
+class SubmAssignmentList extends Component {
 
     static propTypes = {
-        getItems: PropTypes.func.isRequired,
-        item: PropTypes.object.isRequired,
+        getAssignments: PropTypes.func.isRequired,
+        assignment: PropTypes.object.isRequired,
         isAuthenticated: PropTypes.bool,
         auth: PropTypes.object.isRequired
     }
 
     componentDidMount() {
-        this.props.getItems();
+        this.props.getAssignments();
     }
 
 
     //Delete button fn
     onDeleteClick = id => {
-        this.props.deleteItem(id);
+        this.props.deleteAssignment(id);
     };
 
     render() {
         const { user } = this.props.auth;
-        const { items } = this.props.item;
+        const { assignments } = this.props.assignment;
         return (
             //Assignment List
             this.props.isAuthenticated ?
@@ -49,21 +49,20 @@ class AssignmentList extends Component {
                     <ListGroup>
                         <TransitionGroup className="assignment-list">
 
-                            {items.map(({ _id, name, subject, task }) => (
+                            {assignments.map(({ _id, name, email, subject, assignment }) => (
                                 <CSSTransition key={_id} timeout={500} classNames="fade">
                                     <ListGroupItem>
                                         <CardBody>
-                                            <CardTitle tag="h5">{subject}</CardTitle>
-                                            <CardSubtitle tag="h6" className="mb-2 text-muted">{name}</CardSubtitle>
-                                            <CardText>{task}</CardText>
-                                            {(this.props.isAuthenticated && user.userType === "Teacher") ? <Button className="remove-btn"
+                                            <CardTitle tag="h5">{name} {email}</CardTitle>
+                                            <CardSubtitle tag="h6" className="mb-2 text-muted">{subject}</CardSubtitle>
+                                            <CardText>{assignment}</CardText>
+                                            {(this.props.isAuthenticated && user.userType === "Student") ? <Button className="remove-btn"
                                                 color="danger"
                                                 onClick={this.onDeleteClick.bind(this, _id)}
                                             >Delete
                                     </Button> : null}
                                             {(this.props.isAuthenticated && user.userType === "Student") ? <Button className="remove-btn"
                                                 color="success"
-                                                onClick={this.onDeleteClick.bind(this, _id)}
                                             >Mark as complete
                                     </Button> : null}
                                         </CardBody>
@@ -80,9 +79,9 @@ class AssignmentList extends Component {
 
 
 const mapStateToProps = (state) => ({
-    item: state.item,
+    assignment: state.assignment,
     auth: state.auth,
     isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { getItems, deleteItem })(AssignmentList);
+export default connect(mapStateToProps, { getAssignments, deleteAssignment })(SubmAssignmentList);

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AppNavbar from './components/AppNavbar';
-import AssignmentList from './components/AssignmentList';
+//import AssignmentList from './components/AssignmentList';
+import Dashboard from './components/Dashboard';
 import ItemModal from './components/itemModal';
-import FileUpload from './components/FileUpload';
+// import FileUpload from './components/FileUpload';
 
 import { Container } from 'reactstrap';
 
@@ -23,19 +25,18 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={store}>
-        <div className="App">
-          <AppNavbar />
-          <Container>
-            <ItemModal />
-            <AssignmentList />
-            <div className="container mt-4">
-              <h3 className="mt-3">Upload Assignments</h3>
-              <FileUpload />
-            </div>
-          </Container>
-        </div>
-      </Provider>
+      <BrowserRouter>
+        <Provider store={store}>
+          <div className="App">
+            <AppNavbar />
+            <Container>
+              <ItemModal />
+              <Dashboard />
+              {/* <AssignmentList /> */}
+            </Container>
+          </div>
+        </Provider>
+      </BrowserRouter>
     );
   }
 }
