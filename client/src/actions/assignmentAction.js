@@ -18,7 +18,7 @@ export const getAssignments = () => dispatch => {
         );
 };
 
-export const addAssignments = assignment => (dispatch, getState) => {
+export const addAssignment = assignment => (dispatch, getState) => {
     axios
         .post('/api/assignments', assignment, tokenConfig(getState))
         .then(res =>

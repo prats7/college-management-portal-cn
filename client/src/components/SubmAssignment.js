@@ -33,7 +33,6 @@ class SubmAssignmentList extends Component {
         this.props.getAssignments();
     }
 
-
     //Delete button fn
     onDeleteClick = id => {
         this.props.deleteAssignment(id);
@@ -60,10 +59,6 @@ class SubmAssignmentList extends Component {
                                                 color="danger"
                                                 onClick={this.onDeleteClick.bind(this, _id)}
                                             >Delete
-                                    </Button> : null}
-                                            {(this.props.isAuthenticated && user.userType === "Student") ? <Button className="remove-btn"
-                                                color="success"
-                                            >Mark as complete
                                     </Button> : null}
                                         </CardBody>
 

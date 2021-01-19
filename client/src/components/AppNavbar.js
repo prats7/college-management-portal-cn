@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { NavLink } from "react-router-dom";
 import {
     Collapse,
     Navbar,
@@ -6,7 +7,6 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
@@ -46,9 +46,13 @@ class AppNavbar extends Component {
         const authLinks = (
             <Fragment>
                 <NavItem>
-                    <span className = "navbar-text mr-3">
-                        <strong>{user ? `Welcome ${user.name}`: ''}</strong>
-                    </span>
+                    <NavLink
+                        to='/profile'
+                    >
+                        <span className="navbar-text mr-3">
+                            <strong>{user ? `Welcome ${user.name}` : ''}</strong>
+                        </span>
+                    </NavLink>
                 </NavItem>
                 <NavItem>
                     <Logout />
@@ -76,9 +80,9 @@ class AppNavbar extends Component {
                         <NavbarToggler onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="ml-auto" navbar>
-                                
-                                { isAuthenticated ? authLinks : guestLinks }
-                                
+
+                                {isAuthenticated ? authLinks : guestLinks}
+
                             </Nav>
                         </Collapse>
                     </Container>
@@ -94,4 +98,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps,null)(AppNavbar);
+export default connect(mapStateToProps, null)(AppNavbar);

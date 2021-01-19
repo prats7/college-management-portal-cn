@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AppNavbar from './components/AppNavbar';
 //import AssignmentList from './components/AssignmentList';
 import Dashboard from './components/Dashboard';
-import ItemModal from './components/itemModal';
+// import ItemModal from './components/itemModal';
+import Profile from './components/Profile';
 // import FileUpload from './components/FileUpload';
 
 import { Container } from 'reactstrap';
@@ -25,18 +26,20 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <Provider store={store}>
+
+      <Provider store={store}>
+        <BrowserRouter>
           <div className="App">
             <AppNavbar />
-            <Container>
-              <ItemModal />
+            <Switch>
+              <Route component={Profile} path='/profile' />
+
               <Dashboard />
-              {/* <AssignmentList /> */}
-            </Container>
+            </Switch>
+            {/* <AssignmentList /> */}
           </div>
-        </Provider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }

@@ -16,7 +16,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { getItems, deleteItem } from '../actions/itemAction';
 import PropTypes from 'prop-types';
-
+import SubmAssignModal from './SubmAssignModal';
 
 
 //Assignment list 
@@ -32,7 +32,6 @@ class AssignmentList extends Component {
     componentDidMount() {
         this.props.getItems();
     }
-
 
     //Delete button fn
     onDeleteClick = id => {
@@ -61,11 +60,7 @@ class AssignmentList extends Component {
                                                 onClick={this.onDeleteClick.bind(this, _id)}
                                             >Delete
                                     </Button> : null}
-                                            {(this.props.isAuthenticated && user.userType === "Student") ? <Button className="remove-btn"
-                                                color="success"
-                                                onClick={this.onDeleteClick.bind(this, _id)}
-                                            >Mark as complete
-                                    </Button> : null}
+                                            {(this.props.isAuthenticated && user.userType === "Student") ? <SubmAssignModal /> : null}
                                         </CardBody>
 
                                     </ListGroupItem>
