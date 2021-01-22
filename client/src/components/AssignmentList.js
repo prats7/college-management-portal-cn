@@ -10,14 +10,15 @@ import {
     Form,
     FormGroup,
     Input,
-    CardText
+    CardText,
+    Col
 } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { getItems, deleteItem } from '../actions/itemAction';
 import PropTypes from 'prop-types';
 import SubmAssignModal from './SubmAssignModal';
-
+import FileUpload from './FileUpload';
 
 //Assignment list 
 class AssignmentList extends Component {
@@ -68,6 +69,13 @@ class AssignmentList extends Component {
                             ))};
                     </TransitionGroup>
                     </ListGroup>
+                    {(this.props.isAuthenticated && user.userType === "Student") ?
+                        <div className="container mt-4">
+                            <h3 className="mt-3">Upload Assignments</h3>
+                            <FileUpload />
+
+                        </div>
+                        : null}
                 </Container> : null
         );
     }

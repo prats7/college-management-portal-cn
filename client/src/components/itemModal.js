@@ -68,7 +68,7 @@ class ItemModal extends Component {
                     color="light"
                     style={{ marginBottom: '2rem' }}
                     onClick={this.toggle}
-                >Add Assignment</Button> : <h4 className="mb-3 ml-4">Welcome to College Management Portal! Please login to continue...</h4>}
+                >Add Assignment</Button> : <h4 className="mb-3 ml-4">Dashboard</h4>}
 
 
                 <Modal

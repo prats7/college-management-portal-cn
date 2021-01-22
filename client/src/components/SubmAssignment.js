@@ -38,9 +38,12 @@ class SubmAssignmentList extends Component {
         this.props.deleteAssignment(id);
     };
 
+
     render() {
         const { user } = this.props.auth;
         const { assignments } = this.props.assignment;
+        const path = "/upload/";
+        const type = ".pdf";
         return (
             //Assignment List
             this.props.isAuthenticated ?
@@ -49,12 +52,15 @@ class SubmAssignmentList extends Component {
                         <TransitionGroup className="assignment-list">
 
                             {assignments.map(({ _id, name, email, subject, assignment }) => (
+
                                 <CSSTransition key={_id} timeout={500} classNames="fade">
                                     <ListGroupItem>
                                         <CardBody>
                                             <CardTitle tag="h5">{name} {email}</CardTitle>
                                             <CardSubtitle tag="h6" className="mb-2 text-muted">{subject}</CardSubtitle>
-                                            <CardText>{assignment}</CardText>
+                                            {(this.props.isAuthenticated && user.userType === "Teacher") ?
+                                                <CardText className="mb-5">👉<a href={path + assignment + type} target="_blank">Assignment Link</a>
+                                                </CardText> : null}
                                             {(this.props.isAuthenticated && user.userType === "Student") ? <Button className="remove-btn"
                                                 color="danger"
                                                 onClick={this.onDeleteClick.bind(this, _id)}
@@ -67,6 +73,7 @@ class SubmAssignmentList extends Component {
                             ))};
                     </TransitionGroup>
                     </ListGroup>
+
                 </Container> : null
         );
     }

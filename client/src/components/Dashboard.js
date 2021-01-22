@@ -3,18 +3,19 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, Co
 import classnames from 'classnames';
 import AssignmentList from './AssignmentList';
 import SubmAssignment from './SubmAssignment';
-import FileUpload from './FileUpload';
-import ItemModal from './itemModal'
+
+import ItemModal from './itemModal';
 
 
 //Dashboard Tabs
 const Dashboard = (props) => {
+
+
     const [activeTab, setActiveTab] = useState('1');
 
     const toggle = tab => {
         if (activeTab !== tab) setActiveTab(tab);
     }
-
 
     return (
         <Container>
@@ -44,17 +45,11 @@ const Dashboard = (props) => {
                             <Col sm="8">
                                 <AssignmentList />
                             </Col>
-                            <Col>
-                                <div className="container mt-4">
-                                    <h3 className="mt-3">Upload Assignments</h3>
-                                    <FileUpload />
-                                </div>
-                            </Col>
                         </Row>
                     </TabPane>
                     <TabPane tabId="2">
                         <Row>
-                            <Col sm="100">
+                            <Col sm="8">
                                 <SubmAssignment />
                             </Col>
                         </Row>

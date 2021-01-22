@@ -7,16 +7,10 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText,
     Container
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import App from '../App';
 import RegisterModal from './auth/RegisterModal';
 import LoginModal from './auth/LoginModal';
 import Logout from './auth/Logout';
@@ -32,6 +26,7 @@ class AppNavbar extends Component {
         auth: PropTypes.object.isRequired
     }
 
+    //Modal toggle
     toggle = () => {
 
         this.setState({
@@ -46,6 +41,7 @@ class AppNavbar extends Component {
         const authLinks = (
             <Fragment>
                 <NavItem>
+                    {/*Route to profile */}
                     <NavLink
                         to='/profile'
                     >
@@ -59,7 +55,7 @@ class AppNavbar extends Component {
                 </NavItem>
             </Fragment>
         );
-
+        //For Register and login
         const guestLinks = (
             <Fragment>
                 <NavItem>
@@ -94,8 +90,10 @@ class AppNavbar extends Component {
     }
 }
 
+//map current state to props
 const mapStateToProps = state => ({
     auth: state.auth
 });
 
+//Connect react-redux
 export default connect(mapStateToProps, null)(AppNavbar);

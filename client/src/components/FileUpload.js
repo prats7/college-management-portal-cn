@@ -41,15 +41,15 @@ const FileUpload = () => {
             setUploadedFile({ fileName, filePath });
 
             setMessage('File Uploaded')
-            links.push(filePath);
-            links.forEach(showUploads);
+            // links.push(filePath);
+            // links.forEach(showUploads);
 
-            function showUploads(link, index) {
-                document.getElementById('uploads').innerHTML += `<div>
-                <a href=${link} target="_blank">${link} </a>
-                </div>
-                `;
-            }
+            // function showUploads(link, index) {
+            //     document.getElementById('uploads').innerHTML += `<div>
+            //     <a href={process.env.PUBLIC_URL + '/upload/bonfire.jpg } target="_blank">${link} </a>
+            //     </div>
+            //     `;
+            // }
         } catch (err) {
             if (err.response.status === 500) {
                 setMessage('There was a problem with the server');
@@ -73,9 +73,9 @@ const FileUpload = () => {
 
             <div className="row mt-5">
                 <div className="col-md-6 m-auto" id="uploads">
-                    {/* /* <h4 >{uploadedFile.fileName}</h4>* */}
+                    <h4 >{uploadedFile.fileName}</h4>
                     {/* <img style={{ width: '100%' }} src={uploadedFile.filePath} alt="" /> */}
-                    {/* <a href={uploadedFile.filePath} target="_blank">Click here</a> * */}
+                    <a href="/upload/elastic-green-black-fluo.jpg" target="_blank">/upload/elastic-green-black-fluo.jpg</a>
 
 
                 </div>

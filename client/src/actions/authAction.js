@@ -8,7 +8,9 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  NAME_UPDATE_SUCCESS,
+  NAME_UPDATE_FAIL
 } from './types';
 
 
@@ -66,8 +68,9 @@ export const register = ({ userType, name, email, password }) => dispatch => {
 };
 
 
-//Login user
-export const login = ({ userType,email, password }) => dispatch => {
+// Register User
+export const updateName = ({ id, name }) => (dispatch) => {
+
   // Headers
   const config = {
     headers: {
@@ -76,7 +79,38 @@ export const login = ({ userType,email, password }) => dispatch => {
   };
 
   // Request body
-  const body = JSON.stringify({ userType,email, password });
+  const body = JSON.stringify({ name });
+
+  axios
+    .patch(`/api/auth/${id}`, body, config)
+    .then(res =>
+      dispatch({
+        type: NAME_UPDATE_SUCCESS,
+        payload: res.data
+      })
+    )
+    .catch(err => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'NAME_UPDATE_FAIL')
+      );
+      dispatch({
+        type: NAME_UPDATE_FAIL
+      });
+    });
+};
+
+
+//Login user
+export const login = ({ userType, email, password }) => dispatch => {
+  // Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  // Request body
+  const body = JSON.stringify({ userType, email, password });
 
   axios
     .post('/api/auth', body, config)

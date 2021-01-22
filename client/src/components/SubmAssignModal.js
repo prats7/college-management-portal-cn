@@ -104,12 +104,12 @@ class SubmAssignModal extends Component {
                                     placeholder="Enter assignment subject"
                                     onChange={this.onChange}
                                 />
-                                <Label for="assignment">Assignment</Label>
+                                <Label for="assignment">Uploaded Assignment Name</Label>
                                 <Input
                                     type="text"
                                     name="assignment"
                                     id="assignment"
-                                    placeholder="Enter name of your assignment"
+                                    placeholder="Uploaded assignment name"
                                     onChange={this.onChange}
                                 />
                                 <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>Add Assignment</Button>
