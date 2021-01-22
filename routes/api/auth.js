@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
+const MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb://localhost/mern-assignment-app';
 
 //User model
 const User = require('../../models/User');
@@ -62,5 +64,12 @@ router.get('/user', auth, (req, res) => {
         .then(user => res.json(user));
 });
 
+router.patch('/:id', auth, (req, res) => {
+
+    User.findByIdAndUpdate(req.params.id, req.body.name, (err, result) => {
+        if (err) res.send(err);
+        if (result) res.send(result);
+    });
+})
 
 module.exports = router;

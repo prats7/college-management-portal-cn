@@ -17,7 +17,6 @@ app.use('/api/tasks', require('./routes/api/tasks'));
 app.use('/api/assignments', require('./routes/api/assignments'));
 app.use('/api/user', require('./routes/api/user'));
 app.use('/api/auth', require('./routes/api/auth'));
-
 app.use(fileUpload());
 
 // Upload Endpoint
