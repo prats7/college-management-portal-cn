@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, Fragment } from 'react';
 import {
     Container,
     ListGroup,
@@ -18,6 +18,16 @@ import { getAssignments, deleteAssignment } from '../actions/assignmentAction';
 import PropTypes from 'prop-types';
 
 
+const SetMarks = () => {
+    const [marks, setMarks] = useState(0);
+
+    return (
+        <Fragment>
+            <h4>{marks} / 100</h4>
+            <Button type="submit" onClick={() => setMarks(marks + 20)}>🔳</Button>
+        </Fragment>
+    );
+}
 
 //Assignment list 
 class SubmAssignmentList extends Component {
@@ -57,7 +67,12 @@ class SubmAssignmentList extends Component {
                                     <ListGroupItem>
                                         <CardBody>
                                             <CardTitle tag="h5">{name} {email}</CardTitle>
-                                            <CardSubtitle tag="h6" className="mb-2 text-muted">{subject}</CardSubtitle>
+                                            <CardSubtitle tag="h6" className="mb-3 text-muted">{subject}</CardSubtitle>
+                                            {(this.props.isAuthenticated && user.userType === "Teacher") ?
+                                                <div className="mb-3">
+                                                    <SetMarks />
+                                                </div>
+                                                : <h4>0 / 100</h4>}
                                             {(this.props.isAuthenticated && user.userType === "Teacher") ?
                                                 <CardText className="mb-5">👉<a href={path + assignment + type} target="_blank">Assignment Link</a>
                                                 </CardText> : null}
