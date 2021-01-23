@@ -8,7 +8,9 @@ import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     NAME_UPDATE_SUCCESS,
-    NAME_UPDATE_FAIL
+    NAME_UPDATE_FAIL,
+    PASSWORD_UPDATE_SUCCESS,
+    PASSWORD_UPDATE_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -16,7 +18,9 @@ const initialState = {
     isAuthenticated: null,
     isLoading: false,
     user: null,
-    userType: null
+    userType: null,
+    name: null,
+    password: null,
 };
 
 export default function (state = initialState, action) {
@@ -43,16 +47,23 @@ export default function (state = initialState, action) {
                 isLoading: false,
                 userType: action.payload
             };
+        case PASSWORD_UPDATE_SUCCESS:
+            localStorage.setItem('token', action.payload.token);
+            return {
+                ...state,
+                user: state.user.filter(user => user._id !== action.payload)
+            };
         case NAME_UPDATE_SUCCESS:
             localStorage.setItem('token', action.payload.token);
             return {
                 ...state,
-                ...action.payload,
-                isAuthenticated: true,
-                isLoading: false,
-                userType: action.payload
+                user: state.user.filter(user => user._id !== action.payload)
             };
+        case PASSWORD_UPDATE_FAIL:
         case NAME_UPDATE_FAIL:
+            return {
+                ...state
+            }
         case AUTH_ERROR:
         case LOGIN_FAIL:
         case LOGOUT_SUCCESS:

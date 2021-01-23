@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
-const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost/mern-assignment-app';
 
 //User model
@@ -64,12 +63,41 @@ router.get('/user', auth, (req, res) => {
         .then(user => res.json(user));
 });
 
-router.patch('/:id', auth, (req, res) => {
+router.patch('/:id', (req, res) => {
 
-    User.findByIdAndUpdate(req.params.id, req.body.name, (err, result) => {
-        if (err) res.send(err);
-        if (result) res.send(result);
-    });
+    User.findByIdAndUpdate(req.params.id)
+        .then(user => {
+
+            user.name = req.body.name
+
+            user.save(err => {
+                if (err) return res.status(500).json({ message: err.message });
+                else return res.status(200).json({ message: user.name });
+            })
+        })
 })
+
+
+router.patch('/password/:id', (req, res) => {
+
+    User.findByIdAndUpdate(req.params.id)
+        .then(user => {
+
+            //password encryption
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(req.body.password, salt, (err, hash) => {
+                    if (err) throw err;
+                    user.password = hash;
+                    user.save()
+                        .then(user => {
+                            if (err) return res.status(500).json({ message: err.message });
+                            else return res.status(200).json({ message: user.password });
+                        });
+                });
+            })
+        })
+})
+
+
 
 module.exports = router;

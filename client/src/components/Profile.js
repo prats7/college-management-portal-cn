@@ -3,36 +3,20 @@ import { Button, Form, FormGroup, Label, Container, Input, FormText } from 'reac
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { updateName } from '../actions/authAction';
-import { clearErrors } from '../actions/errorAction';
+import { updateName, updatePassword } from '../actions/authAction';
 
 class ProfileModal extends Component {
 
     //Initialize state
     state = {
-        name: ''
+        name: '',
+        password: '',
     };
 
     static propTypes = {
         isAuthenticated: PropTypes.bool,
-        auth: PropTypes.object.isRequired,
-        error: PropTypes.object.isRequired,
-        updateName: PropTypes.func.isRequired,
-        clearErrors: PropTypes.func.isRequired
+        auth: PropTypes.object.isRequired
     }
-
-    componentDidUpdate(prevProps) {
-        const { error, isAuthenticated } = this.props;
-        if (error !== prevProps.error) {
-            // Check for register error
-            if (error.id === 'NAME_UPDATE_FAIL') {
-                this.setState({ msg: error.msg.msg });
-            } else {
-                this.setState({ msg: null });
-            }
-        }
-    }
-
 
     //On change fn
     onChange = (e) => {
@@ -43,13 +27,24 @@ class ProfileModal extends Component {
     onSubmit = e => {
 
         const { name } = this.state;
-
-        //Create new user
-        const newName = {
+        const user = {
             name
-        };
+        }
+
         //Attempt to update
-        this.props.updateName(newName);
+        this.props.updateName(user);
+    }
+
+    //Function for adding data on form submit
+    onSubmitPassword = e => {
+
+        const { password } = this.state;
+        const user = {
+            password
+        }
+
+        //Attempt to update
+        this.props.updatePassword(user);
     }
 
     render() {
@@ -71,7 +66,24 @@ class ProfileModal extends Component {
                             style={{ marginTop: '3rem' }}
                             block>
                             UPDATE</Button>
-                    </Form></Container>
+                    </Form>
+
+                    <Form onSubmit={this.onSubmitPassword}>
+                        <FormGroup>
+                            <Input
+                                onChange={this.onChange}
+                                type="text" style={{ marginTop: '3rem' }}
+                                name="password"
+                                id="password"
+                                placeholder="Enter new password" />
+                        </FormGroup>
+                        <Button
+                            type="submit"
+                            style={{ marginTop: '3rem' }}
+                            block>
+                            UPDATE</Button>
+                    </Form>
+                </Container>
                 </div>
             </div>
         )
@@ -80,11 +92,11 @@ class ProfileModal extends Component {
 
 //Mapping item to state
 const mapStateToProps = state => ({
+    password: state.password,
     name: state.name,
     auth: state.auth,
-    isAuthenticated: state.auth.isAuthenticated,
-    error: state.error
+    isAuthenticated: state.auth.isAuthenticated
 });
 
 //Connects react and redux of add item
-export default connect(mapStateToProps, { updateName, clearErrors })(ProfileModal);
+export default connect(mapStateToProps, { updateName, updatePassword })(ProfileModal);

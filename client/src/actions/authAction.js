@@ -10,7 +10,9 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   NAME_UPDATE_SUCCESS,
-  NAME_UPDATE_FAIL
+  NAME_UPDATE_FAIL,
+  PASSWORD_UPDATE_SUCCESS,
+  PASSWORD_UPDATE_FAIL
 } from './types';
 
 
@@ -67,22 +69,41 @@ export const register = ({ userType, name, email, password }) => dispatch => {
     });
 };
 
+// Update user password
+export const updatePassword = ({ id, password }) => (dispatch, getState) => {
 
-// Register User
-export const updateName = ({ id, name }) => (dispatch) => {
 
-  // Headers
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
+  // Request body
+  const body = JSON.stringify({ password });
+
+  axios
+    .patch(`/api/auth/password${id}`, body, tokenConfig(getState))
+    .then(res =>
+      dispatch({
+        type: PASSWORD_UPDATE_SUCCESS,
+        payload: res.data
+      })
+    )
+    .catch(err => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'PASSWORD_UPDATE_FAIL')
+      );
+      dispatch({
+        type: PASSWORD_UPDATE_FAIL
+      });
+    });
+};
+
+
+
+// Update  User Name
+export const updateName = ({ id, name }) => (dispatch, getState) => {
 
   // Request body
   const body = JSON.stringify({ name });
 
   axios
-    .patch(`/api/auth/${id}`, body, config)
+    .patch(`/api/auth/${id}`, body, tokenConfig(getState))
     .then(res =>
       dispatch({
         type: NAME_UPDATE_SUCCESS,
