@@ -37,7 +37,15 @@ app.post('/upload', (req, res) => {
     });
 });
 
+if (process.env.NODE_ENV == "production") {
+    app.use(express.static('client/build'))
+    const path = require('path')
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
+
 //Express server
-const PORT = 9050 || process.env.PORT;
+const PORT = process.env.PORT || 9050;
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mern-assignment-app');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/mern-assignment-app');
 
 const db = mongoose.connection;
 
