@@ -48,16 +48,16 @@ export default function (state = initialState, action) {
                 userType: action.payload
             };
         case PASSWORD_UPDATE_SUCCESS:
-            localStorage.setItem('token', action.payload.token);
+            localStorage.setItem(action.payload.token);
             return {
                 ...state,
-                user: state.user.filter(user => user._id !== action.payload)
+                user: state.user.filter(user => user._id == action.payload)
             };
         case NAME_UPDATE_SUCCESS:
-            localStorage.setItem('token', action.payload.token);
+            localStorage.setItem(action.payload.token);
             return {
                 ...state,
-                user: state.user.filter(user => user._id !== action.payload)
+                user: state.user.filter(user => user._id == action.payload)
             };
         case PASSWORD_UPDATE_FAIL:
         case NAME_UPDATE_FAIL:

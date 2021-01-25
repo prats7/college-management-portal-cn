@@ -72,12 +72,19 @@ export const register = ({ userType, name, email, password }) => dispatch => {
 // Update user password
 export const updatePassword = ({ id, password }) => (dispatch, getState) => {
 
+  // Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
 
   // Request body
   const body = JSON.stringify({ password });
 
   axios
-    .patch(`/api/auth/password${id}`, body, tokenConfig(getState))
+    .patch(`/api/auth/password${id}`, body, config)
     .then(res =>
       dispatch({
         type: PASSWORD_UPDATE_SUCCESS,
@@ -99,11 +106,19 @@ export const updatePassword = ({ id, password }) => (dispatch, getState) => {
 // Update  User Name
 export const updateName = ({ id, name }) => (dispatch, getState) => {
 
+  // Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+
   // Request body
   const body = JSON.stringify({ name });
 
   axios
-    .patch(`/api/auth/${id}`, body, tokenConfig(getState))
+    .patch(`/api/auth/${id}`, body, config)
     .then(res =>
       dispatch({
         type: NAME_UPDATE_SUCCESS,
@@ -111,9 +126,6 @@ export const updateName = ({ id, name }) => (dispatch, getState) => {
       })
     )
     .catch(err => {
-      dispatch(
-        returnErrors(err.response.data, err.response.status, 'NAME_UPDATE_FAIL')
-      );
       dispatch({
         type: NAME_UPDATE_FAIL
       });

@@ -74,6 +74,8 @@ router.patch('/:id', (req, res) => {
                 if (err) return res.status(500).json({ message: err.message });
                 else return res.status(200).json({ message: user.name });
             })
+        }).catch(err => {
+            console.log(err);
         })
 })
 
